@@ -15,8 +15,8 @@ import { DayExpenseComponent } from './components/day-expense/day-expense.compon
 @NgModule({
   declarations: [
     AppComponent,
-    ExpenseTrackerComponent,
-    DayExpenseComponent,
+    //ExpenseTrackerComponent,
+    //DayExpenseComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +25,8 @@ import { DayExpenseComponent } from './components/day-expense/day-expense.compon
     MatTabsModule,
     MatButtonModule,
     MatInputModule,
+    ExpenseTrackerComponent,
+    DayExpenseComponent,
     //ExpenseTrackerComponent,
     MatCardModule
   ],
