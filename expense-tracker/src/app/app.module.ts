@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,15 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
-
 import { ExpenseTrackerComponent } from './components/expense-tracker/expense-tracker.component';
 import { DayExpenseComponent } from './components/day-expense/day-expense.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    //ExpenseTrackerComponent,
-    //DayExpenseComponent,
+    ExpenseTrackerComponent,
+    DayExpenseComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,12 +24,10 @@ import { DayExpenseComponent } from './components/day-expense/day-expense.compon
     MatTabsModule,
     MatButtonModule,
     MatInputModule,
-    ExpenseTrackerComponent,
-    DayExpenseComponent,
-    //ExpenseTrackerComponent,
     MatCardModule
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

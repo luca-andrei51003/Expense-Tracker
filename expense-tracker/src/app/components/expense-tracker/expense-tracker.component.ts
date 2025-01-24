@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-expense-tracker',
-  standalone: true,
   templateUrl: './expense-tracker.component.html',
+  standalone: true,
   styleUrls: ['./expense-tracker.component.css']
 })
 export class ExpenseTrackerComponent {
