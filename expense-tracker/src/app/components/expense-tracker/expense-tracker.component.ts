@@ -14,7 +14,6 @@ import { Weekdays } from '../../shared/models/weekdays-enum';
 })
 
 export class ExpenseTrackerComponent {
-  //days: string[] = [Weekdays.Monday, Weekdays.Tuesday, Weekdays.Wednesday, Weekdays.Thursday, Weekdays.Friday, Weekdays.Saturday, Weekdays.Sunday];
   days = Object.keys(Weekdays).map((key:string)=> Weekdays[key as keyof typeof Weekdays])
   weeklyExpenses: { [key: string]: any[] } = {
     Monday: [], Tuesday: [], Wednesday: [], Thursday: [],
