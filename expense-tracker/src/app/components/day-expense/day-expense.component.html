@@ -8,14 +8,16 @@
       <button mat-button (click)="deleteExpense(i)">Delete</button>
     </div>
     <div *ngIf="expense.editing">
-      <input [(ngModel)]="expense.category" placeholder="Category" />
+      <div>Editing...</div>
+      <input class="my-custom-input" [(ngModel)]="expense.category" placeholder="Category" />
       <input type="number" [(ngModel)]="expense.amount" placeholder="Amount" />
       <button mat-button (click)="saveExpense(expense)">Save</button>
     </div>
   </div>
 
   <div class="add-expense">
-    <input [(ngModel)]="newExpense.category" placeholder="Category" />
+    <div>Add expense...</div>
+    <input class="my-custom-input" [(ngModel)]="newExpense.category" placeholder="Category" />
     <input type="number" [(ngModel)]="newExpense.amount" placeholder="Amount" />
     <button mat-button (click)="addExpense()">Add Expense</button>
   </div>

@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-//import { ExpenseTrackerComponent } from './components/expense-tracker/expense-tracker.component';
+import { ExpenseTrackerComponent } from './components/expense-tracker/expense-tracker.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [  ],
+  imports: [ 
+    ExpenseTrackerComponent,
+    CommonModule
+  ],
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

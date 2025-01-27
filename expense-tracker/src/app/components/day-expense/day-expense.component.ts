@@ -1,14 +1,20 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { DayExpense } from '../../shared/models/day-expense-interface';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import exp from 'constants';
 
 @Component({
   selector: 'app-day-expense',
+  imports: [ CommonModule, FormsModule ],
+  standalone: true,
   templateUrl: './day-expense.component.html',
   styleUrls: ['./day-expense.component.css']
 })
 export class DayExpenseComponent {
   @Input() day: string = '';
   @Input() expenses: any[] = [];
-  @Output() update = new EventEmitter<{ day: string, expenses: any[] }>();
+  @Output() update = new EventEmitter<DayExpense>();
 
   newExpense = { category: '', amount: 0 };
 
@@ -20,8 +26,18 @@ export class DayExpenseComponent {
     }
   }
 
+  // ngOnChanges() {
+    
+  // }
+
   editExpense(expense: any) {
+    this.expenses?.forEach(element => {
+      if (element.editing == true) {
+        element.editing = false;
+      }
+    });
     expense.editing = true;
+    console.log(this.expenses);
   }
 
   saveExpense(expense: any) {
@@ -40,5 +56,7 @@ export class DayExpenseComponent {
 
   private emitUpdate() {
     this.update.emit({ day: this.day, expenses: this.expenses });
+    console.log({ day: this.day, expenses: this.expenses });
+    
   }
 }
