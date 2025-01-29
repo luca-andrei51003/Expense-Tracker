@@ -26,10 +26,6 @@ export class DayExpenseComponent {
     }
   }
 
-  // ngOnChanges() {
-    
-  // }
-
   editExpense(expense: any) {
     this.expenses?.forEach(element => {
       if (element.editing == true) {
@@ -37,12 +33,17 @@ export class DayExpenseComponent {
       }
     });
     expense.editing = true;
+    let initialValue = expense.amount;
     console.log(this.expenses);
   }
 
   saveExpense(expense: any) {
     expense.editing = false;
     this.emitUpdate();
+  }
+
+  cancelEditing(expense: any){
+    expense.editing = false;
   }
 
   deleteExpense(index: number) {
