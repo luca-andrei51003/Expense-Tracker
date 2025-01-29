@@ -24,6 +24,14 @@ export class ExpenseTrackerComponent {
     this.weeklyExpenses[$event.day] = $event.expenses;
   }
 
+  getDailyTotal(): { [key: string]: number } {
+    let dailyTotal: { [key: string]: number } = {};
+    Object.keys(this.weeklyExpenses).forEach(day => {
+      dailyTotal[day] = this.weeklyExpenses[day].reduce((acc, expense) => acc + expense.amount, 0);
+    });
+    return dailyTotal;
+  }
+
   calculateWeeklyTotal(): number {
     return Object.values(this.weeklyExpenses)
       .flat()

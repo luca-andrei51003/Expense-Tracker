@@ -13,3 +13,21 @@ button {
 .my-custom-input {
   background-color: red !important;
 }
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th {
+  height: 50px;
+  width: 120px;
+}
+
+td {
+  height: 25px;
+}
+
+tr {
+  :hover {background-color: coral;}
+}
