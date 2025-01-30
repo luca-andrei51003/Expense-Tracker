@@ -17,6 +17,7 @@ export class DayExpenseComponent {
   @Output() update = new EventEmitter<DayExpense>();
 
   newExpense = { category: '', amount: 0 };
+  private originalValues = new Map<any, number>();
 
   addExpense() {
     if (this.newExpense.category && this.newExpense.amount > 0) {
@@ -33,16 +34,21 @@ export class DayExpenseComponent {
       }
     });
     expense.editing = true;
-    let initialValue = expense.amount;
+    this.originalValues.set(expense, expense.amount);
     console.log(this.expenses);
   }
 
   saveExpense(expense: any) {
     expense.editing = false;
+    this.originalValues.delete(expense);
     this.emitUpdate();
   }
 
   cancelEditing(expense: any){
+    if (this.originalValues.has(expense)) {
+      expense.amount = this.originalValues.get(expense);
+      this.originalValues.delete(expense);
+    }
     expense.editing = false;
   }
 
@@ -58,6 +64,5 @@ export class DayExpenseComponent {
   private emitUpdate() {
     this.update.emit({ day: this.day, expenses: this.expenses });
     console.log({ day: this.day, expenses: this.expenses });
-    
   }
 }
