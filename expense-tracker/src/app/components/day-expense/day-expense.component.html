@@ -6,12 +6,14 @@
       <span>{{ expense.category }}: ${{ expense.amount }}</span>
       <button mat-button (click)="editExpense(expense)">Edit</button>
       <button mat-button (click)="deleteExpense(i)">Delete</button>
+      
     </div>
     <div *ngIf="expense.editing">
       <div>Editing...</div>
       <input class="my-custom-input" [(ngModel)]="expense.category" placeholder="Category" />
       <input type="number" [(ngModel)]="expense.amount" placeholder="Amount" />
       <button mat-button (click)="saveExpense(expense)">Save</button>
+      <button mat-button (click)="cancelEditing(expense)">Cancel</button>
     </div>
   </div>
 
