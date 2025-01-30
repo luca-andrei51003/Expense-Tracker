@@ -22,7 +22,11 @@ export class ExpenseTrackerComponent implements AfterViewInit {
   };
 
   ngAfterViewInit() {
-      console.log("MatTabGroup Initialized:", this.tabGroup);
+    if (!this.tabGroup) {
+      console.log('MatTabGroup NOT Initialized...');
+    } else {
+      console.log('MatTabGroup Initialized successfully!')
+    }
   }
 
   updateWeeklyExpenses($event: DayExpense) {
@@ -57,4 +61,17 @@ export class ExpenseTrackerComponent implements AfterViewInit {
       console.log(`Moved to previous tab: $(this.tabgroup.selectedIndex})`);
     }
   }
+  // previousTab() {
+  //   if (this.tabGroup && this.tabGroup.selectedIndex > 0) {
+  //     this.tabGroup.selectedIndex -= 1;
+  //     console.log(`Switched to tab: ${this.tabGroup.selectedIndex}`);
+  //   }
+  // }
+
+  // nextTab() {
+  //   if (this.tabGroup && this.tabGroup.selectedIndex < this.days.length) {
+  //     this.tabGroup.selectedIndex += 1;
+  //     console.log(`Switched to tab: ${this.tabGroup.selectedIndex}`);
+  //   }
+  // }
 }

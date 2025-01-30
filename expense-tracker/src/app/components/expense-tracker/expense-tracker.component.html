@@ -1,16 +1,21 @@
 <mat-tab-group #displayTabGroup>
   <mat-tab *ngFor="let day of days; let i = index" [label]="day">
+    <div class = "tab-navigation">
+      <button (click)="previousTab(i)">Previous Day</button>
+      <button (click)="nextTab(i)">Next Day</button>
+    </div>
     <app-day-expense 
       [day]="day" 
       [expenses]="weeklyExpenses[day]" 
       (update)="updateWeeklyExpenses($event)">
     </app-day-expense>
-    <div class = "tab-navigation">
-      <button (click)="previousTab(i)">Previous Day</button>
-      <button (click)="nextTab(i)">Next Day</button>
-    </div>
+    
   </mat-tab>
   <mat-tab label="Summary">
+    <div class="tab-navigation">
+      <button (click)="previousTab(days.length)">Previous Day</button>
+      <button (click)="nextTab(days.length)">Next Day</button>
+    </div>
     <div class="summary">
       <h3>Weekly Total: ${{ calculateWeeklyTotal() }}</h3>
     </div>
@@ -30,9 +35,6 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-navigation">
-      <button (click)="previousTab(days.length)">Previous Day</button>
-      <button (click)="nextTab(days.length)">Next Day</button>
-    </div>
+    
   </mat-tab>
 </mat-tab-group>
