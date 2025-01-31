@@ -24,17 +24,28 @@
         <thead>
           <tr>
             <th>Day</th>
+            <th>Category</th>
             <th>Total Expense</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let entry of getDailyTotal() | keyvalue">
-            <td>{{ entry.key }}</td>
-            <td>${{ entry.value }}</td>
-          </tr>
+          <ng-container *ngFor="let day of days">
+            <tr>
+              <td [attr.rowspan]="weeklyExpenses[day].length + 1" style="font-weight: bold; text-transform: uppercase;" >
+                {{ day }}
+              </td>
+            </tr>
+            <!-- <tr *ngFor="let entry of getDailyTotal() | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>${{ entry.value }}</td>
+            </tr> -->
+            <tr *ngFor="let expense of weeklyExpenses[day]">
+              <td>{{ expense.category }}</td>
+              <td>{{ expense.amount }}</td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>
-    
   </mat-tab>
 </mat-tab-group>
