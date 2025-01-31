@@ -153,6 +153,6 @@ export class ExpenseTrackerComponent implements AfterViewInit {
     // Export the file
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array', cellStyles: true });
     saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), fileName);
-  }     
+  }       
   
 }
