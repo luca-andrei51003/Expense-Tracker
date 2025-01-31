@@ -69,12 +69,11 @@ export class ExpenseTrackerComponent implements AfterViewInit {
   }
 
   exportToExcel() {
-    // Calculate the current week's start (Monday) and end (Sunday) dates
     const today = new Date();
-    const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    const currentDay = today.getDay();
   
     const monday = new Date(today);
-    monday.setDate(today.getDate() - (currentDay === 0 ? 6 : currentDay - 1)); // Adjust for Sunday
+    monday.setDate(today.getDate() - (currentDay === 0 ? 6 : currentDay - 1));
   
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
@@ -83,11 +82,10 @@ export class ExpenseTrackerComponent implements AfterViewInit {
       `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
     const startDate = formatDate(monday);
     const endDate = formatDate(sunday);
-  
-    // Prepare the data and cell styles
+
     const data: any[] = [];
-    const merges: XLSX.Range[] = []; // To store merge ranges
-    let rowIndex = 1; // Start from row 1 for merging
+    const merges: XLSX.Range[] = [];
+    let rowIndex = 1;
     const borderStyle = {
       top: { style: 'thick' },
       bottom: { style: 'thick' },
@@ -98,61 +96,49 @@ export class ExpenseTrackerComponent implements AfterViewInit {
   
     this.days.forEach((day) => {
       const expenses = this.weeklyExpenses[day];
-      const startRow = rowIndex; // Track where the day's data starts
-  
-      // Add the "Day" header row and the first expense in the same row
+      const startRow = rowIndex;
+
       if (expenses.length > 0) {
         data.push({ Day: day.toUpperCase(), Category: expenses[0].category, Amount: expenses[0].amount });
       } else {
         data.push({ Day: day.toUpperCase(), Category: '', Amount: '' });
       }
   
-      // Add subsequent rows for the remaining expenses
       for (let i = 1; i < expenses.length; i++) {
         data.push({ Day: '', Category: expenses[i].category, Amount: expenses[i].amount });
         rowIndex++;
       }
-  
-      // Add a merge for the "Day" column
+
       if (expenses.length > 0) {
-        merges.push({ s: { r: startRow, c: 0 }, e: { r: rowIndex, c: 0 } }); // Merge the "Day" column
-  
-        // Apply a thick border around the entire day's block
+        merges.push({ s: { r: startRow, c: 0 }, e: { r: rowIndex, c: 0 } });
         for (let i = startRow; i <= rowIndex; i++) {
-          cellStyles[`A${i}`] = { border: borderStyle }; // "Day" column
-          cellStyles[`B${i}`] = { border: borderStyle }; // "Category" column
-          cellStyles[`C${i}`] = { border: borderStyle }; // "Amount" column
+          cellStyles[`A${i}`] = { border: borderStyle };
+          cellStyles[`B${i}`] = { border: borderStyle };
+          cellStyles[`C${i}`] = { border: borderStyle };
         }
       }
-  
+
       rowIndex++;
     });
-  
-    // Convert JSON to worksheet
+
     const worksheet = XLSX.utils.json_to_sheet(data);
-  
-    // Apply merges
+
     if (merges.length > 0) {
       worksheet['!merges'] = merges;
     }
-  
-    // Apply styles
+
     Object.keys(cellStyles).forEach((cell) => {
       if (worksheet[cell]) {
         worksheet[cell].s = cellStyles[cell];
       }
     });
-  
-    // Create a workbook
+
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Weekly Expenses');
-  
-    // Format the file name
+
     const fileName = `WeeklyExpenses_${startDate}_to_${endDate}.xlsx`;
-  
-    // Export the file
+
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array', cellStyles: true });
     saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), fileName);
   }       
-  
 }

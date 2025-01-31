@@ -36,10 +36,6 @@
                 {{ day }}
               </td>
             </tr>
-            <!-- <tr *ngFor="let entry of getDailyTotal() | keyvalue">
-              <td>{{ entry.key }}</td>
-              <td>${{ entry.value }}</td>
-            </tr> -->
             <tr *ngFor="let expense of weeklyExpenses[day]">
               <td>{{ expense.category }}</td>
               <td>{{ expense.amount }}</td>
