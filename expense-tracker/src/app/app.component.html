@@ -1,1 +1,5 @@
-<app-expense-tracker></app-expense-tracker>
+<app-login *ngIf="!isAuthenticated" (loginSuccess)="handleLogin($event)"></app-login>
+<div *ngIf="isAuthenticated">
+    <button (click)="logout()">Logout</button>
+    <app-expense-tracker></app-expense-tracker>
+</div>

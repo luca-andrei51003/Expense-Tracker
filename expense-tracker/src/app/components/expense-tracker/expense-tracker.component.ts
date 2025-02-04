@@ -6,12 +6,14 @@ import { DayExpenseComponent } from '../day-expense/day-expense.component';
 import { Weekdays } from '../../shared/models/weekdays-enum';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { LoginComponent } from '../../login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-expense-tracker',
   templateUrl: './expense-tracker.component.html',
   standalone: true,
-  imports: [ MatTab, CommonModule, MatTabGroup, DayExpenseComponent ],
+  imports: [ MatTab, CommonModule, MatTabGroup, ReactiveFormsModule, DayExpenseComponent, LoginComponent ],
   styleUrls: ['./expense-tracker.component.css']
 })
 

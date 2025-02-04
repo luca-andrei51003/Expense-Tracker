@@ -1,0 +1,27 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+  }
+  .login-form div {
+    margin-bottom: 10px;
+  }
+  .login-form label {
+    font-weight: bold;
+  }
+  .login-form input {
+    width: 100%;
+    padding: 5px;
+  }
+  button {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  button:disabled {
+    background-color: gray;
+  }
+  
