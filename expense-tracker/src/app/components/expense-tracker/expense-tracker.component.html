@@ -51,20 +51,5 @@
         </tbody>
       </table>
     </div>
-
-    <!-- Pie Chart Section -->
-    <div class="chart-container">
-      <h3>Spending by Category</h3>
-      <ngx-charts-pie-chart
-        [view]="[700, 400]"
-        [results]="pieChartData"
-        [scheme]="colorScheme"
-        [gradient]="false"
-        [doughnut]="true"
-        [labels]="true"
-        [legend]="true"
-        [legendPosition]="'below'">
-      </ngx-charts-pie-chart>
-    </div>
   </mat-tab>
 </mat-tab-group>

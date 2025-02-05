@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { LoginComponent } from '../../login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 @Component({
   selector: 'app-expense-tracker',
@@ -20,8 +20,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatTabGroup,
     ReactiveFormsModule,
     DayExpenseComponent,
-    LoginComponent,
-    NgxChartsModule
+    LoginComponent
     ],
   styleUrls: ['./expense-tracker.component.css']
 })
@@ -33,8 +32,6 @@ export class ExpenseTrackerComponent implements AfterViewInit {
     Monday: [], Tuesday: [], Wednesday: [], Thursday: [],
     Friday: [], Saturday: [], Sunday: []
   };
-
-  pieChartData: { name: string; value: number}[] = [];
 
   ngAfterViewInit() {
     const now = new Date();
@@ -63,11 +60,6 @@ export class ExpenseTrackerComponent implements AfterViewInit {
         }
       });
     });
-
-    this.pieChartData = Object.keys(categoryTotals).map((category) => ({
-      name: category,
-      value: categoryTotals[category],
-    }));
   }
   
 
