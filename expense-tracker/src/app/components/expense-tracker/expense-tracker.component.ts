@@ -8,11 +8,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { LoginComponent } from '../../login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AgGridModule } from 'ag-grid-angular';
-// import { ModuleRegistry } from 'ag-grid-community'; 
-// import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-// import { GridChartsModule } from 'ag-grid-enterprise';
-// import 'ag-grid-enterprise';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-expense-tracker',
@@ -25,7 +21,7 @@ import { AgGridModule } from 'ag-grid-angular';
     ReactiveFormsModule,
     DayExpenseComponent,
     LoginComponent,
-    AgGridModule
+    NgxChartsModule
     ],
   styleUrls: ['./expense-tracker.component.css']
 })
@@ -38,26 +34,7 @@ export class ExpenseTrackerComponent implements AfterViewInit {
     Friday: [], Saturday: [], Sunday: []
   };
 
-  gridApi: any;
-  // Coloanele gridului pentru sumarul pe categorii
-  columnDefs = [
-    { field: 'category', headerName: 'Category' },
-    { field: 'total', headerName: 'Total' }
-  ];
-  defaultColDef = {
-    flex: 1,
-    sortable: true,
-    filter: true,
-  };
-
-  // Datele agregate: un array de obiecte { category: string, total: number }
-  categorySummary: any[] = [];
-  // Pentru a reține culoarea fiecărei categorii (o genera o singură dată)
-  categoryColors: { [key: string]: string } = {};
-  // Pentru afișarea legendei: array de obiecte { category: string, color: string }
-  categoryLegend: any[] = [];
-  // Setări suplimentare pentru chartul pie (se vor genera din culorile asociate categoriilor)
-  chartThemeOverrides: any = {};
+  pieChartData: { name: string; value: number}[] = [];
 
   ngAfterViewInit() {
     const now = new Date();
@@ -74,6 +51,25 @@ export class ExpenseTrackerComponent implements AfterViewInit {
   updateWeeklyExpenses($event: DayExpense) {
     this.weeklyExpenses[$event.day] = $event.expenses;
   }
+
+  calculateCategoryTotals() {
+    const categoryTotals: { [key: string]: number } = {};
+    Object.values(this.weeklyExpenses).forEach((expenses) => {
+      expenses.forEach((expense) => {
+        if (categoryTotals[expense.category]) {
+          categoryTotals[expense.category] += expense.amount;
+        } else {
+          categoryTotals[expense.category] = expense.amount;
+        }
+      });
+    });
+
+    this.pieChartData = Object.keys(categoryTotals).map((category) => ({
+      name: category,
+      value: categoryTotals[category],
+    }));
+  }
+  
 
   getDailyTotal(): { [key: string]: number } {
     let dailyTotal: { [key: string]: number } = {};
@@ -177,61 +173,5 @@ export class ExpenseTrackerComponent implements AfterViewInit {
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array', cellStyles: true });
     saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), fileName);
   }
-
-  updateCategoryData() {
-    const summary: { [category: string]: number } = {};
-    // Parcurge cheltuielile pentru fiecare zi și agregă valorile pe categorie
-    Object.keys(this.weeklyExpenses).forEach(day => {
-      this.weeklyExpenses[day].forEach(expense => {
-        if (expense.category) {
-          summary[expense.category] = (summary[expense.category] || 0) + expense.amount;
-        }
-      });
-    });
-    // Construiește array-ul de date pentru grid și atribuie o culoare aleatorie fiecărei categorii (dacă nu este deja setată)
-    this.categorySummary = Object.keys(summary).map(category => {
-      if (!this.categoryColors[category]) {
-        this.categoryColors[category] = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-      }
-      return { category, total: summary[category] };
-    });
-    // Construiește legenda pe baza culorilor
-    this.categoryLegend = this.categorySummary.map(item => ({
-      category: item.category,
-      color: this.categoryColors[item.category]
-    }));
-    // Actualizează opțiunile de chart pentru a folosi culorile generate
-    const fills = this.categorySummary.map(item => this.categoryColors[item.category]);
-    const strokes = fills.map(color => color);
-    this.chartThemeOverrides = {
-      pie: {
-        series: {
-          fills: fills,
-          strokes: strokes
-        }
-      }
-    };
-  }
-
-  // Event handler pentru AG Grid
-  onGridReady(params: any) {
-    this.gridApi = params.api;
-  }
-
-  // Creează graficul de tip pie folosind AG Grid charting (se va desena în containerul cu id-ul "myChart")
-  createChart() {
-    if (this.gridApi) {
-      const chartContainer = document.getElementById('myChart');
-      if (chartContainer) {
-        this.gridApi.createRangeChart({
-          chartType: 'pie',
-          cellRange: {
-            columns: ['category', 'total']
-          },
-          chartContainer: chartContainer,
-          chartThemeOverrides: this.chartThemeOverrides
-        });
-      }
-    }
-  }
+  
 }

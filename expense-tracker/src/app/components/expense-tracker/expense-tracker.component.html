@@ -1,5 +1,5 @@
 <mat-tab-group #displayTabGroup>
-  <!-- Tab-urile pentru fiecare zi -->
+  <!-- Tabs for each day -->
   <mat-tab *ngFor="let day of days; let i = index" [label]="day">
     <div class="tab-navigation">
       <button (click)="previousTab(i)">Previous Day</button>
@@ -12,19 +12,22 @@
     </app-day-expense>
   </mat-tab>
 
-  <!-- Tab-ul Summary -->
+  <!-- Summary Tab -->
   <mat-tab label="Summary">
     <div class="tab-navigation">
       <button (click)="previousTab(days.length)">Previous Day</button>
       <button (click)="nextTab(days.length)">Next Day</button>
     </div>
-    
-    <!-- Secțiunea de sumar existentă -->
+
+    <!-- Weekly Total Section -->
     <div class="summary">
       <h3>Weekly Total: ${{ calculateWeeklyTotal() }}</h3>
       <button (click)="exportToExcel()">Export to Excel Workbook</button>
     </div>
+
+    <!-- Expense Breakdown Table -->
     <div class="day-table">
+      <h3>Detailed Breakdown:</h3>
       <table border="2">
         <thead>
           <tr>
@@ -36,7 +39,7 @@
         <tbody>
           <ng-container *ngFor="let day of days">
             <tr>
-              <td [attr.rowspan]="weeklyExpenses[day].length + 1" style="font-weight: bold; text-transform: uppercase;">
+              <td [attr.rowspan]="weeklyExpenses[day].length + 1">
                 {{ day }}
               </td>
             </tr>
@@ -48,37 +51,20 @@
         </tbody>
       </table>
     </div>
-    <!-- Secțiunea pentru Pie Chart folosind AG Grid -->
-    <div class="chart-section">
-      <h3>Weekly Expense Summary by Category</h3>
-      <!-- Butonul care declanșează generarea graficului -->
-      <button (click)="createChart()">Show Pie Chart</button>
-      
-      <!-- Grid-ul AG Grid cu sumarul per categorie -->
-      <ag-grid-angular
-        style="width: 100%; height: 200px;"
-        class="ag-theme-alpine"
-        [rowData]="categorySummary"
-        [columnDefs]="columnDefs"
-        [defaultColDef]="defaultColDef"
-        (gridReady)="onGridReady($event)"
-        [enableCharts]="true">
-      </ag-grid-angular>
-      
-      <!-- Containerul unde AG Grid va desena graficul de tip Pie -->
-      <div id="myChart" style="width: 100%; height: 400px; margin-top: 10px;"></div>
-      
-      <!-- Legenda: se afișează fiecare categorie cu un box colorat corespunzător -->
-      <div class="legend">
-        <h4>Legend</h4>
-        <div *ngFor="let item of categoryLegend" class="legend-item">
-          <span class="legend-box" [ngStyle]="{'background-color': item.color}"></span>
-          {{ item.category }}
-        </div>
-      </div>
+
+    <!-- Pie Chart Section -->
+    <div class="chart-container">
+      <h3>Spending by Category</h3>
+      <ngx-charts-pie-chart
+        [view]="[700, 400]"
+        [results]="pieChartData"
+        [scheme]="colorScheme"
+        [gradient]="false"
+        [doughnut]="true"
+        [labels]="true"
+        [legend]="true"
+        [legendPosition]="'below'">
+      </ngx-charts-pie-chart>
     </div>
-    
-    <!-- Secțiunea cu tabelul detaliat (poți să o păstrezi sau să o elimini după preferințe) -->
-    
   </mat-tab>
 </mat-tab-group>

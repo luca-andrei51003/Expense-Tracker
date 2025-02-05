@@ -1,33 +1,143 @@
-h3 {
-  margin: 16px 0;
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
+/* Headings */
+h3 {
+  margin: 16px 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* Add Expense Section */
 .add-expense {
   margin-top: 16px;
 }
 
+/* Buttons */
 button {
   margin-left: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+button:hover {
+  background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #c4c4c4;
+  cursor: not-allowed;
+}
+
+/* Custom Input Styling */
 .my-custom-input {
   background-color: lightcoral !important;
 }
 
+/* Table Styling */
 table {
   border-collapse: collapse;
   text-align: center;
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid #ddd;
 }
 
 th {
   height: 50px;
   width: 120px;
+  background-color: #f2f2f2;
+  font-weight: bold;
+  padding: 0.75rem;
 }
 
 td {
   height: 25px;
+  padding: 0.5rem;
 }
 
-tr {
-  :hover {background-color: coral;}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: coral;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.tab-navigation button {
+  margin-left: 0; /* To prevent conflict with global button margin */
+  margin-right: 8px;
+}
+
+/* Summary Section */
+.summary {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.summary button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.summary button:hover {
+  background-color: #0056b3;
+}
+
+/* Pie Chart Section */
+.chart-container {
+  margin: 3rem auto;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+.chart-container h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tab-navigation {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab-navigation button {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+
+  table {
+    width: 95%;
+  }
+
+  .chart-container {
+    width: 95%;
+  }
 }
