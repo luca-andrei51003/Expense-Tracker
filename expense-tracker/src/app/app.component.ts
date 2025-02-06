@@ -27,8 +27,13 @@ export class AppComponent {
       localStorage.setItem('isAuthenticated', 'true');
     }
   }
+
   logout(): void {
-    localStorage.removeItem('isAuthenticated');
-    this.isAuthenticated = false;
+    const confirmLogout = confirm("Are you sure you want to log out? All expenses will be permanently deleted.");
+    if (confirmLogout) {
+      localStorage.removeItem('isAuthenticated');
+      localStorage.removeItem('weeklyExpenses');
+      this.isAuthenticated = false;
+    }
   }
 }

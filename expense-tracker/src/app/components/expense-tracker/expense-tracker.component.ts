@@ -33,6 +33,10 @@ export class ExpenseTrackerComponent implements AfterViewInit {
     Friday: [], Saturday: [], Sunday: []
   };
 
+  constructor() {
+    this.loadExpenses();
+  }
+
   ngAfterViewInit() {
     const now = new Date();
     const formattedTimestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')} <@> ${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`;
@@ -47,6 +51,18 @@ export class ExpenseTrackerComponent implements AfterViewInit {
 
   updateWeeklyExpenses($event: DayExpense) {
     this.weeklyExpenses[$event.day] = $event.expenses;
+    this.saveExpenses();
+  }
+
+  saveExpenses() {
+    localStorage.setItem('weeklyExpenses', JSON.stringify(this.weeklyExpenses));
+  }
+
+  loadExpenses() {
+    const storedExpenses = localStorage.getItem('weeklyExpenses');
+    if (storedExpenses) {
+      this.weeklyExpenses = JSON.parse(storedExpenses);
+    }
   }
 
   calculateCategoryTotals() {
