@@ -11,7 +11,7 @@
     <div *ngIf="expense.editing">
       <div>Editing...</div>
       <input class="my-custom-input" [(ngModel)]="expense.category" placeholder="Category" />
-      <input type="number" [(ngModel)]="expense.amount" placeholder="Amount" />
+      <input class="my-custom-input" type="number" [(ngModel)]="expense.amount" placeholder="Amount" />
       <button mat-button (click)="saveExpense(expense)">Save</button>
       <button mat-button (click)="cancelEditing(expense)">Cancel</button>
     </div>
@@ -20,7 +20,7 @@
   <div class="add-expense">
     <div>Add expense...</div>
     <input class="my-custom-input" [(ngModel)]="newExpense.category" placeholder="Category" />
-    <input type="number" [(ngModel)]="newExpense.amount" placeholder="Amount" />
+    <input class="my-custom-input" type="number" [(ngModel)]="newExpense.amount" placeholder="Amount" />
     <button mat-button (click)="addExpense()">Add Expense</button>
   </div>
 </div>
